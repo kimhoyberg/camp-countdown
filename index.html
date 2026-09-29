@@ -122,7 +122,7 @@
   .pin.minor span { font: 300 .62rem "Geist Mono", ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; font-style: normal; color: var(--muted); margin-top: .5rem; }
   .bus { position: absolute; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
     background: var(--ink); color: var(--bg); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line), 0 8px 18px -6px rgba(0,0,0,.35); pointer-events: none; }
-  .bus svg { position: static; width: 18px; height: 18px; }
+  .bus svg { position: static; width: 18px; height: 18px; transform: scaleX(-1); } /* faces left, towards Struer */
   .pin.has-bus span { margin-top: 1.5rem; }
   .inset { position: absolute; left: 1rem; bottom: 1rem; width: clamp(84px, 19%, 170px); padding: .5rem; background: var(--bg); border: 1px solid var(--line); border-radius: .75rem; }
   .inset svg { position: static; height: auto; }
