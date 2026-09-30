@@ -178,7 +178,7 @@
   </section>
 
 <script>
-  // Wednesday 30 Sep 2026, 12:00 Danish time (Europe/Copenhagen, CEST = UTC+2 on that date).
+  // Wednesday 30 Sep 2026, 11:45 Danish time (Europe/Copenhagen, CEST = UTC+2 on that date).
   // The offset is resolved via Intl so it stays correct regardless of the viewer's timezone.
   const TZ = "Europe/Copenhagen";
   function zonedToUtc(y, mo, d, h, mi) {
@@ -190,7 +190,7 @@
     return guess - (asLocal - guess);
   }
 
-  const target = zonedToUtc(2026, 9, 30, 12, 0);
+  const target = zonedToUtc(2026, 9, 30, 11, 45);
   const start = zonedToUtc(2026, 9, 28, 8, 0); // progress bar runs from Monday 08:00 Danish time
   const $ = id => document.getElementById(id);
   const pad = n => String(n).padStart(2, "0");
@@ -256,7 +256,7 @@
   // Schedule (Danish time): the bus leaves Silkeborg Wed 30 Sep 10:33 and arrives in Struer 11:45.
   // Add ?bus=2026-09-30T09:30:00Z to the URL to preview another moment.
   const DEPART = zonedToUtc(2026, 9, 30, 10, 33);
-  const ARRIVE = zonedToUtc(2026, 9, 30, 11, 45);
+  const ARRIVE = target;   // the bus arrives as the countdown ends
   const skew = (() => { const q = new URLSearchParams(location.search).get("bus"); const t = q && Date.parse(q); return t ? t - Date.now() : 0; })();
 
   function busProgress() {
