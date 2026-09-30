@@ -115,6 +115,8 @@
   .map .land { fill: var(--land); stroke: var(--land-line); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
   .map .link { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 5; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .7; }
   .map .trail { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; opacity: .8; }
+  .bus.driving::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid var(--ink); animation: ping 2.2s ease-out infinite; }
+  @keyframes ping { from { transform: scale(1); opacity: .5; } to { transform: scale(1.9); opacity: 0; } }
   .bus.glide { transition: left 1s linear, top 1s linear; }
   .pin { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
   .pin::before { content: ""; display: block; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line); }
@@ -259,7 +261,7 @@
 
   function busProgress() {
     const p = Math.min(1, Math.max(0, (Date.now() + skew - DEPART) / (ARRIVE - DEPART)));
-    return p * 0.6 + p * p * (3 - 2 * p) * 0.4;   // gentle ease out of Silkeborg and into Struer
+    return p;
   }
   function busAt(p) {                              // point + travelled polyline at fraction p of the route
     let d = p * LEN; const pts = [ROUTE[0]];
@@ -278,6 +280,7 @@
     bus.style.top = (at[1] - MAP.win[1]) / MAP.win[3] * 100 + "%";
     $("trail").setAttribute("d", pts.length > 1 ? pathD(pts) : "");
     const p = busProgress();
+    bus.classList.toggle("driving", p > 0 && p < 1);
     pinSilkeborg.classList.toggle("has-bus", p === 0);
     pinStruer.classList.toggle("has-bus", p === 1);
     if (p === 1 && wasArrived === false) setTimeout(confetti, 1000);   // after the 1s glide into Struer
